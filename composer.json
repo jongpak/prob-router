@@ -1,0 +1,17 @@
+{
+    "name": "prob/router",
+    "description": "A simple http request router library",
+    "homepage": "https://github.com/jongpak/prob-router",
+    "keywords": ["router", "dispatcher", "dispatch", "url", "path"],
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": { "Prob\\Router\\": "src/" }
+    },
+    "require": {
+        "php": ">=5.6",
+        "prob/rewrite-helper": "*",
+        "prob/handler": "*",
+        "prob/url-helper": "*"
+    }
+}
