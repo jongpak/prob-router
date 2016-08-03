@@ -16,7 +16,7 @@ class MatcherTest extends TestCase
     public function setUp()
     {
         $map = new Map();
-        $map->setNamespace('jongpak\\Router');
+        $map->setNamespace('Prob\\Router');
         $map->get('/', 'test');
         $map->get('/some', 'test');
         $map->get('/some/other', 'test');
@@ -33,7 +33,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals($this->matcher->match(new Request()), [
             'urlPattern' => '/',
-            'handler' => new Proc('test', 'jongpak\Router'),
+            'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => []
         ]);
     }
@@ -44,7 +44,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals($this->matcher->match(new Request()), [
             'urlPattern' => '/some',
-            'handler' => new Proc('test', 'jongpak\Router'),
+            'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => []
         ]);
     }
@@ -55,7 +55,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals($this->matcher->match(new Request()), [
             'urlPattern' => '/some/other',
-            'handler' => new Proc('test', 'jongpak\Router'),
+            'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => []
         ]);
     }
@@ -66,7 +66,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals($this->matcher->match(new Request()), [
             'urlPattern' => '/{board:string}',
-            'handler' => new Proc('test', 'jongpak\Router'),
+            'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => [
                 'board' => 'free'
             ]
@@ -79,7 +79,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals($this->matcher->match(new Request()), [
             'urlPattern' => '/{board}/{post:int}',
-            'handler' => new Proc('test', 'jongpak\Router'),
+            'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => [
                 'board' => 'free',
                 'post' => '5'
@@ -93,7 +93,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals($this->matcher->match(new Request()), [
             'urlPattern' => '/{board:string}/{post:int}/edit',
-            'handler' => new Proc('test', 'jongpak\Router'),
+            'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => [
                 'board' => 'free',
                 'post' => '5'
