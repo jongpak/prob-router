@@ -10,8 +10,8 @@
     },
     "require": {
         "php": ">=5.6",
-        "prob/rewrite-helper": "*",
-        "prob/handler": "*",
-        "prob/url-helper": "*"
+        "prob/rewrite-helper": "dev-master",
+        "prob/handler": "dev-master",
+        "prob/url-helper": "dev-master"
     }
 }
