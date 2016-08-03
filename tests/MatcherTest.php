@@ -1,10 +1,10 @@
 <?php
 
-namespace jongpak\Router;
+namespace Prob\Router;
 
-use jongpak\Handler\Proc;
 use PHPUnit\Framework\TestCase;
-use jongpak\Rewrite\Request;
+use Prob\Handler\Proc;
+use Prob\Rewrite\Request;
 
 class MatcherTest extends TestCase
 {

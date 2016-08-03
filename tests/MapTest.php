@@ -1,9 +1,9 @@
 <?php
 
-namespace jongpak\Router;
+namespace Prob\Router;
 
 use PHPUnit\Framework\TestCase;
-use jongpak\Handler\Proc;
+use Prob\Handler\Proc;
 
 class MapTest extends TestCase
 {

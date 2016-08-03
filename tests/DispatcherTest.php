@@ -1,10 +1,10 @@
 <?php
 
-namespace jongpak\Router;
+namespace Prob\Router;
 
-use jongpak\Rewrite\Request;
-use jongpak\Router\Exception\RoutePathNotFound;
 use PHPUnit\Framework\TestCase;
+use Prob\Rewrite\Request;
+use Prob\Router\Exception\RoutePathNotFound;
 
 class DispatcherTest extends TestCase
 {
