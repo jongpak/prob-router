@@ -4,7 +4,7 @@
 ## Usage
 
 ### 1. Configure url mapping and handler
-`url.mapping.php`
+url.mapping.php
 ```php
 <?php
 
@@ -24,7 +24,7 @@ return $map;
 ```
 
 ### 2. Write your request handler (controller)
-`app/controller/Test.php`
+app/controller/Test.php
 ```php
 <?php
 
@@ -39,7 +39,7 @@ class Test
 }
 ```
 
-`app/controller/Post.php`
+app/controller/Post.php
 ```php
 <?php
 
@@ -55,7 +55,7 @@ class Post
 ```
 
 ### 3. Apply!
-`index.php`
+index.php
 ```php
 <?php
 
