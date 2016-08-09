@@ -13,5 +13,8 @@
         "prob/rewrite-helper": "dev-master",
         "prob/handler": "dev-master",
         "prob/url-helper": "dev-master"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "*"
     }
 }
