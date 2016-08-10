@@ -6,7 +6,7 @@ use Prob\Handler\Proc;
 
 class Map
 {
-    private $method = [
+    private $handlers = [
         'GET' => [],
         'POST' => [],
     ];
@@ -20,7 +20,7 @@ class Map
 
     public function get($path, $handler)
     {
-        $this->method['GET'][] = [
+        $this->handlers['GET'][] = [
             'urlPattern' => $path,
             'handler' => new Proc($handler, $this->namespace)
         ];
@@ -28,14 +28,14 @@ class Map
 
     public function post($path, $handler)
     {
-        $this->method['POST'][] = [
+        $this->handlers['POST'][] = [
             'urlPattern' => $path,
             'handler' => new Proc($handler, $this->namespace)
         ];
     }
 
-    public function method($method)
+    public function getHandlers($handler)
     {
-        return $this->method[$method];
+        return $this->handlers[$handler];
     }
 }

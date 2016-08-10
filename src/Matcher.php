@@ -28,18 +28,15 @@ class Matcher
      */
     public function match(Request $req)
     {
-        $method = $this->map->method($req->method());
-        $proc = null;
+        $handlers = $this->map->getHandlers($req->method());
 
-        foreach ($method as $row) {
+        foreach ($handlers as $row) {
             $matcher = new UrlMatcher($row['urlPattern']);
-            $result = $matcher->match($req->path());
+            $matchResult = $matcher->match($req->path());
 
-            $matchResolve = $row;
-
-            if ($result !== false) {
-                $matchResolve['urlNameMatch'] = $result;
-                return $matchResolve;
+            if ($matchResult !== false) {
+                $row['urlNameMatch'] = $matchResult;
+                return $row;
             }
         }
 
