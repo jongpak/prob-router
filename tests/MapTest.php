@@ -35,7 +35,7 @@ class MapTest extends TestCase
 
     public function testGetMethod()
     {
-        $this->assertEquals($this->map->getHandlers('GET'), [
+        $this->assertEquals([
             [
                 'urlPattern' => '/',
                 'handler' => new Proc(function () {
@@ -48,12 +48,12 @@ class MapTest extends TestCase
                     echo 'getOkSome';
                 })
             ]
-        ]);
+        ], $this->map->getHandlers('GET'));
     }
 
     public function testPostMethod()
     {
-        $this->assertEquals($this->map->getHandlers('POST'), [
+        $this->assertEquals([
             [
                 'urlPattern' => '/',
                 'handler' => new Proc(function () {
@@ -66,6 +66,6 @@ class MapTest extends TestCase
                     echo 'postOkSome';
                 })
             ]
-        ]);
+        ], $this->map->getHandlers('POST'));
     }
 }

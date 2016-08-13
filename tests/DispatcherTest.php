@@ -35,15 +35,13 @@ class DispatcherTest extends TestCase
     public function testDispatchHandler()
     {
         $_SERVER['PATH_INFO'] = '/some';
-        $this->assertEquals($this->dispatcher->dispatch(new Request()), 'ok');
+        $this->assertEquals('ok', $this->dispatcher->dispatch(new Request()));
     }
 
     public function testDispatchHandlerWithName()
     {
         $_SERVER['PATH_INFO'] = '/other';
-        $this->assertEquals($this->dispatcher->dispatch(new Request()), [
-            'board' => 'other'
-        ]);
+        $this->assertEquals(['board' => 'other'], $this->dispatcher->dispatch(new Request()));
     }
 
     public function testDispatchHandlerWithParameterMap()
@@ -55,7 +53,7 @@ class DispatcherTest extends TestCase
         $paramMap->bindByName('arg2', 'b');
         $paramMap->bindByNameWithType(ParameterMapTest::class, 't', new ParameterMapTest());
 
-        $this->assertEquals($this->dispatcher->dispatch(new Request(), $paramMap), 'abok!!!');
+        $this->assertEquals('abok!!!', $this->dispatcher->dispatch(new Request(), $paramMap));
     }
 
     public function testNoRouteException()

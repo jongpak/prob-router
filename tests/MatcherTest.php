@@ -31,81 +31,81 @@ class MatcherTest extends TestCase
     {
         $_SERVER['PATH_INFO'] = '/';
 
-        $this->assertEquals($this->matcher->match(new Request()), [
+        $this->assertEquals([
             'urlPattern' => '/',
             'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => []
-        ]);
+        ], $this->matcher->match(new Request()));
     }
 
     public function testMatchOneDeep()
     {
         $_SERVER['PATH_INFO'] = '/some';
 
-        $this->assertEquals($this->matcher->match(new Request()), [
+        $this->assertEquals([
             'urlPattern' => '/some',
             'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => []
-        ]);
+        ], $this->matcher->match(new Request()));
     }
 
     public function testMatchTwoDeep()
     {
         $_SERVER['PATH_INFO'] = '/some/other';
 
-        $this->assertEquals($this->matcher->match(new Request()), [
+        $this->assertEquals([
             'urlPattern' => '/some/other',
             'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => []
-        ]);
+        ], $this->matcher->match(new Request()));
     }
 
     public function testMatchNameHolderOneDeep()
     {
         $_SERVER['PATH_INFO'] = '/free';
 
-        $this->assertEquals($this->matcher->match(new Request()), [
+        $this->assertEquals([
             'urlPattern' => '/{board:string}',
             'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => [
                 'board' => 'free'
             ]
-        ]);
+        ], $this->matcher->match(new Request()));
     }
 
     public function testMatchNameHolderTwoDeep()
     {
         $_SERVER['PATH_INFO'] = '/free/5';
 
-        $this->assertEquals($this->matcher->match(new Request()), [
+        $this->assertEquals([
             'urlPattern' => '/{board}/{post:int}',
             'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => [
                 'board' => 'free',
                 'post' => '5'
             ]
-        ]);
+        ], $this->matcher->match(new Request()));
     }
 
     public function testMatchNameHolderTwoDeepOneStatic()
     {
         $_SERVER['PATH_INFO'] = '/free/5/edit';
 
-        $this->assertEquals($this->matcher->match(new Request()), [
+        $this->assertEquals([
             'urlPattern' => '/{board:string}/{post:int}/edit',
             'handler' => new Proc('test', 'Prob\Router'),
             'urlNameMatch' => [
                 'board' => 'free',
                 'post' => '5'
             ]
-        ]);
+        ], $this->matcher->match(new Request()));
     }
 
     public function testNoMatch()
     {
         $_SERVER['PATH_INFO'] = '/no_match/';
 
-        $this->assertEquals($this->matcher->match(new Request()), false);
+        $this->assertEquals(false, $this->matcher->match(new Request()));
     }
 
 
