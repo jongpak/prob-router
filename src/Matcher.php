@@ -35,7 +35,7 @@ class Matcher
             $matchResult = $matcher->match($req->getPath());
 
             if ($matchResult !== false) {
-                $row['urlNameMatch'] = $matchResult;
+                $row['urlNameMatching'] = $matchResult;
                 return $row;
             }
         }

@@ -34,6 +34,16 @@ class Map
         ];
     }
 
+    /**
+     * Return array of handlers
+     *
+     * return value:
+     * array[index]
+     *          ['urlPattern']       string a pattern of url (ex.) /{board}/{post}
+     *          ['handler']         Proc a Proc class contains a handler
+     *
+     * @return array
+     */
     public function getHandlers($handler)
     {
         return $this->handlers[$handler];
