@@ -3,6 +3,7 @@
 namespace Prob\Router;
 
 use Prob\Rewrite\Request;
+use Prob\Handler\ParameterMap;
 use Prob\Router\Exception\RoutePathNotFound;
 
 class Dispatcher
@@ -23,16 +24,20 @@ class Dispatcher
 
     /**
      * @param Request $request
+     * @param ParameterMap $map
      * @return mixed return value of dispatch handler
      * @throws RoutePathNotFound
      */
-    public function dispatch(Request $request)
+    public function dispatch(Request $request, ParameterMap $map = null)
     {
         $match = $this->matcher->match($request);
 
         if ($match === false)
             throw new RoutePathNotFound('Route path not found: ' . $request->getPath());
 
-        return $match['handler']->exec($match['urlNameMatch']);
+        if($map === null)
+            return $match['handler']->exec($match['urlNameMatch']);
+        else
+            return $match['handler']->execWithParameterMap($map);
     }
 }

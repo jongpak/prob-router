@@ -4,6 +4,7 @@ namespace Prob\Router;
 
 use PHPUnit\Framework\TestCase;
 use Prob\Rewrite\Request;
+use Prob\Handler\ParameterMap;
 use Prob\Router\Exception\RoutePathNotFound;
 
 class DispatcherTest extends TestCase
@@ -18,6 +19,10 @@ class DispatcherTest extends TestCase
         $map = new Map();
         $map->get('/some', function () {
             return 'ok';
+        });
+
+        $map->get('/parameterMap/{arg1}/{arg2}', function(ParameterMapTest $t, $arg1, $arg2) {
+            return $arg1 . $arg2 . $t->get();
         });
 
         $map->get('/{board:string}', function ($req) {
@@ -41,9 +46,31 @@ class DispatcherTest extends TestCase
         ]);
     }
 
+    public function testDispatchHandlerWithParameterMap()
+    {
+        $_SERVER['PATH_INFO'] = '/parameterMap/a/b';
+
+        $paramMap = new ParameterMap();
+        $paramMap->bindByName('arg1', 'a');
+        $paramMap->bindByName('arg2', 'b');
+        $paramMap->bindByNameWithType(ParameterMapTest::class, 't', new ParameterMapTest());
+
+        $this->assertEquals($this->dispatcher->dispatch(new Request(), $paramMap), 'abok!!!');
+    }
+
     public function testNoRouteException()
     {
         $this->expectException(RoutePathNotFound::class);
         $this->dispatcher->dispatch(new Request());
+    }
+}
+
+class ParameterMapTest
+{
+    private $var = 'ok!!!';
+
+    public function get()
+    {
+        return $this->var;
     }
 }
