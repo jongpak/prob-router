@@ -6,6 +6,13 @@ use Prob\Handler\Proc;
 
 class Map
 {
+    /**
+     * array['GET'|'POST']
+     *          [index]
+     *              ['urlPattern']  string a pattern of url (ex.) /{board}/{post}
+     *              ['handler']     Proc a Proc class contains a handler
+     * @var array
+     */
     private $handlers = [
         'GET' => [],
         'POST' => [],
@@ -13,9 +20,9 @@ class Map
 
     private $namespace = '';
 
-    public function setNamespace($ns = '\\')
+    public function setNamespace($namespace = '\\')
     {
-        $this->namespace = $ns;
+        $this->namespace = $namespace;
     }
 
     public function get($path, $handler)

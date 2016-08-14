@@ -6,5 +6,4 @@ use \Exception;
 
 class RoutePathNotFound extends Exception
 {
-
 }

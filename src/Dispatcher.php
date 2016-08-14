@@ -37,12 +37,14 @@ class Dispatcher
     {
         $match = $this->matcher->match($request);
 
-        if ($match === false)
+        if ($match === false) {
             throw new RoutePathNotFound('Route path not found: ' . $request->getPath());
+        }
 
-        if($map === null)
+        if ($map === null) {
             return $match['handler']->exec($match['urlNameMatching']);
-        else
+        } else {
             return $match['handler']->execWithParameterMap($map);
+        }
     }
 }

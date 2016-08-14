@@ -21,7 +21,7 @@ class DispatcherTest extends TestCase
             return 'ok';
         });
 
-        $map->get('/parameterMap/{arg1}/{arg2}', function(ParameterMapTest $t, $arg1, $arg2) {
+        $map->get('/parameterMap/{arg1}/{arg2}', function (ParameterMapTest $t, $arg1, $arg2) {
             return $arg1 . $arg2 . $t->get();
         });
 

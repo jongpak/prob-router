@@ -107,8 +107,6 @@ class MatcherTest extends TestCase
 
         $this->assertEquals(false, $this->matcher->match(new Request()));
     }
-
-
 }
 
 function test()
