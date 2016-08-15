@@ -35,16 +35,20 @@ class Dispatcher
      */
     public function dispatch(Request $request, ParameterMap $map = null)
     {
-        $match = $this->matcher->match($request);
+        /**
+         * Maching result of reqeust handler
+         * @var array|bool
+         */
+        $requestMatching = $this->matcher->match($request);
 
-        if ($match === false) {
+        if ($requestMatching === false) {
             throw new RoutePathNotFound('Route path not found: ' . $request->getPath());
         }
 
         if ($map === null) {
-            return $match['handler']->exec($match['urlNameMatching']);
-        } else {
-            return $match['handler']->execWithParameterMap($map);
+            return $requestMatching['handler']->exec($requestMatching['urlNameMatching']);
         }
+
+        return $requestMatching['handler']->execWithParameterMap($map);
     }
 }

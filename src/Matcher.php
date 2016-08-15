@@ -32,10 +32,10 @@ class Matcher
 
         foreach ($handlers as $row) {
             $matcher = new UrlMatcher($row['urlPattern']);
-            $matchResult = $matcher->match($req->getPath());
+            $urlMatching = $matcher->match($req->getPath());
 
-            if ($matchResult !== false) {
-                $row['urlNameMatching'] = $matchResult;
+            if ($urlMatching !== false) {
+                $row['urlNameMatching'] = $urlMatching;
                 return $row;
             }
         }
