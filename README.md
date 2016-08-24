@@ -1,6 +1,8 @@
 # Prob/Router
 *A simple http request router library*
 
+[![Build Status](https://travis-ci.org/jongpak/prob-router.svg?branch=master)](https://travis-ci.org/jongpak/prob-router)
+
 ## Usage
 
 ### 1. Configure url mapping and handler
