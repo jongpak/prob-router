@@ -58,6 +58,8 @@ class DispatcherTest extends TestCase
 
     public function testNoRouteException()
     {
+        $_SERVER['PATH_INFO'] = '';
+
         $this->expectException(RoutePathNotFound::class);
         $this->dispatcher->dispatch(new Request());
     }
