@@ -2,6 +2,7 @@
 *A simple http request router library*
 
 [![Build Status](https://travis-ci.org/jongpak/prob-router.svg?branch=master)](https://travis-ci.org/jongpak/prob-router)
+[![codecov](https://codecov.io/gh/jongpak/prob-router/branch/master/graph/badge.svg)](https://codecov.io/gh/jongpak/prob-router)
 
 ## Usage
 
