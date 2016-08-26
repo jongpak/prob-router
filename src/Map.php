@@ -27,15 +27,17 @@ class Map
 
     public function get($path, $handler)
     {
-        $this->handlers['GET'][] = [
-            'urlPattern' => $path,
-            'handler' => new Proc($handler, $this->namespace)
-        ];
+        $this->addHandler('GET', $path, $handler);
     }
 
     public function post($path, $handler)
     {
-        $this->handlers['POST'][] = [
+        $this->addHandler('POST', $path, $handler);
+    }
+
+    private function addHandler($method, $path, $handler)
+    {
+        $this->handlers[$method][] = [
             'urlPattern' => $path,
             'handler' => new Proc($handler, $this->namespace)
         ];
