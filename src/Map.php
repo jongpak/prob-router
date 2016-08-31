@@ -2,15 +2,16 @@
 
 namespace Prob\Router;
 
-use Prob\Handler\Proc;
+use Prob\Handler\ProcFactory;
+use Prob\Handler\ProcInterface;
 
 class Map
 {
     /**
      * array['GET'|'POST']
      *          [index]
-     *              ['urlPattern']  string a pattern of url (ex.) /{board}/{post}
-     *              ['handler']     Proc a Proc class contains a handler
+     *              ['urlPattern']  string          a pattern of url (ex.) /{board}/{post}
+     *              ['handler']     ProcInterface   a handler of urlPattern
      * @var array
      */
     private $handlers = [
@@ -39,7 +40,7 @@ class Map
     {
         $this->handlers[$method][] = [
             'urlPattern' => $path,
-            'handler' => new Proc($handler, $this->namespace)
+            'handler' => ProcFactory::getProc($handler, $this->namespace)
         ];
     }
 
@@ -48,8 +49,8 @@ class Map
      *
      * return value:
      * array[index]
-     *          ['urlPattern']       string a pattern of url (ex.) /{board}/{post}
-     *          ['handler']         Proc a Proc class contains a handler
+     *          ['urlPattern']  string          a pattern of url (ex.) /{board}/{post}
+     *          ['handler']     ProcInterface   a handler of urlPattern
      *
      * @return array
      */

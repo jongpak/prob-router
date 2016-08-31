@@ -3,7 +3,7 @@
 namespace Prob\Router;
 
 use PHPUnit\Framework\TestCase;
-use Prob\Handler\Proc;
+use Prob\Handler\ProcFactory;
 use Prob\Rewrite\Request;
 
 class MatcherTest extends TestCase
@@ -33,7 +33,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals([
             'urlPattern' => '/',
-            'handler' => new Proc('test', 'Prob\Router'),
+            'handler' => ProcFactory::getProc('test', 'Prob\Router'),
             'urlNameMatching' => []
         ], $this->matcher->match(new Request()));
     }
@@ -44,7 +44,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals([
             'urlPattern' => '/some',
-            'handler' => new Proc('test', 'Prob\Router'),
+            'handler' => ProcFactory::getProc('test', 'Prob\Router'),
             'urlNameMatching' => []
         ], $this->matcher->match(new Request()));
     }
@@ -55,7 +55,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals([
             'urlPattern' => '/some/other',
-            'handler' => new Proc('test', 'Prob\Router'),
+            'handler' => ProcFactory::getProc('test', 'Prob\Router'),
             'urlNameMatching' => []
         ], $this->matcher->match(new Request()));
     }
@@ -66,7 +66,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals([
             'urlPattern' => '/{board:string}',
-            'handler' => new Proc('test', 'Prob\Router'),
+            'handler' => ProcFactory::getProc('test', 'Prob\Router'),
             'urlNameMatching' => [
                 'board' => 'free'
             ]
@@ -79,7 +79,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals([
             'urlPattern' => '/{board}/{post:int}',
-            'handler' => new Proc('test', 'Prob\Router'),
+            'handler' => ProcFactory::getProc('test', 'Prob\Router'),
             'urlNameMatching' => [
                 'board' => 'free',
                 'post' => '5'
@@ -93,7 +93,7 @@ class MatcherTest extends TestCase
 
         $this->assertEquals([
             'urlPattern' => '/{board:string}/{post:int}/edit',
-            'handler' => new Proc('test', 'Prob\Router'),
+            'handler' => ProcFactory::getProc('test', 'Prob\Router'),
             'urlNameMatching' => [
                 'board' => 'free',
                 'post' => '5'

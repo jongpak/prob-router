@@ -3,7 +3,6 @@
 namespace Prob\Router;
 
 use Prob\Rewrite\Request;
-use Prob\Handler\Proc;
 use Prob\Url\Matcher as UrlMatcher;
 
 class Matcher

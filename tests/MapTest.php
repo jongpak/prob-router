@@ -3,7 +3,7 @@
 namespace Prob\Router;
 
 use PHPUnit\Framework\TestCase;
-use Prob\Handler\Proc;
+use Prob\Handler\ProcFactory;
 
 class MapTest extends TestCase
 {
@@ -38,13 +38,13 @@ class MapTest extends TestCase
         $this->assertEquals([
             [
                 'urlPattern' => '/',
-                'handler' => new Proc(function () {
+                'handler' => ProcFactory::getProc(function () {
                     echo 'getOk';
                 })
             ],
             [
                 'urlPattern' => '/some',
-                'handler' => new Proc(function () {
+                'handler' => ProcFactory::getProc(function () {
                     echo 'getOkSome';
                 })
             ]
@@ -56,13 +56,13 @@ class MapTest extends TestCase
         $this->assertEquals([
             [
                 'urlPattern' => '/',
-                'handler' => new Proc(function () {
+                'handler' => ProcFactory::getProc(function () {
                     echo 'postOk';
                 })
             ],
             [
                 'urlPattern' => '/some',
-                'handler' => new Proc(function () {
+                'handler' => ProcFactory::getProc(function () {
                     echo 'postOkSome';
                 })
             ]
