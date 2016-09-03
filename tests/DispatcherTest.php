@@ -5,6 +5,8 @@ namespace Prob\Router;
 use PHPUnit\Framework\TestCase;
 use Prob\Rewrite\Request;
 use Prob\Handler\ParameterMap;
+use Prob\Handler\Parameter\Named;
+use Prob\Handler\Parameter\TypedAndNamed;
 use Prob\Router\Exception\RoutePathNotFound;
 
 class DispatcherTest extends TestCase
@@ -49,9 +51,9 @@ class DispatcherTest extends TestCase
         $_SERVER['PATH_INFO'] = '/parameterMap/a/b';
 
         $paramMap = new ParameterMap();
-        $paramMap->bindByName('arg1', 'a');
-        $paramMap->bindByName('arg2', 'b');
-        $paramMap->bindByNameWithType(ParameterMapTest::class, 't', new ParameterMapTest());
+        $paramMap->bindBy(new Named('arg1'), 'a');
+        $paramMap->bindBy(new Named('arg2'), 'b');
+        $paramMap->bindBy(new TypedAndNamed(ParameterMapTest::class, 't'), new ParameterMapTest());
 
         $this->assertEquals('abok!!!', $this->dispatcher->dispatch(new Request(), $paramMap));
     }
