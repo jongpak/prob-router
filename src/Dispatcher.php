@@ -42,7 +42,12 @@ class Dispatcher
         $requestMatching = $this->matcher->match($request);
 
         if ($requestMatching === false) {
-            throw new RoutePathNotFound('Route path not found: ' . $request->getPath());
+            throw new RoutePathNotFound(
+                sprintf('Route path not found: %s (%s)',
+                            $request->getPath(),
+                            $request->getMethod()
+                )
+            );
         }
 
         if ($map === null) {
