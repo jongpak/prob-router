@@ -65,6 +65,36 @@ index.php
 use Prob\Router\Dispatcher;
 use Prob\Rewrite\Request;
 
+// use zend-diactoros package (for PSR-7)
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Uri;
+
 $dispatcher = new Dispatcher(require 'url.mapping.php');
-$dispatcher->dispatch(new Request());
+```
+
+```php
+// print 'Hello main'
+$dispatcher->dispatch(
+    (new Request())
+        ->withUri(new Uri('http://test.com/'))
+        ->withMethod('GET')
+);
+```
+
+```php
+// print 'Test page!'
+$dispatcher->dispatch(
+    (new Request())
+        ->withUri(new Uri('http://test.com/test'))
+        ->withMethod('GET')
+);
+```
+
+```php
+// print 'Post ID: 5'
+$dispatcher->dispatch(
+    (new Request())
+        ->withUri(new Uri('http://test.com/post/5'))
+        ->withMethod('GET')
+);
 ```
