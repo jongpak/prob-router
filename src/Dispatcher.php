@@ -2,7 +2,7 @@
 
 namespace Prob\Router;
 
-use Prob\Rewrite\Request;
+use Psr\Http\Message\RequestInterface;
 use Prob\Handler\ParameterMap;
 use Prob\Router\Exception\RoutePathNotFound;
 
@@ -28,12 +28,12 @@ class Dispatcher
      * otherwise,
      * Dispatcher call a handler with matcing arguments by ParameterMap
      *
-     * @param Request $request
+     * @param RequestInterface $request
      * @param ParameterMap $map
      * @return mixed return value of dispatch handler
      * @throws RoutePathNotFound
      */
-    public function dispatch(Request $request, ParameterMap $map = null)
+    public function dispatch(RequestInterface $request, ParameterMap $map = null)
     {
         /**
          * Maching result of reqeust handler
@@ -44,7 +44,7 @@ class Dispatcher
         if ($requestMatching === false) {
             throw new RoutePathNotFound(
                 sprintf('Route path not found: %s (%s)',
-                            $request->getPath(),
+                            $request->getUri()->getPath(),
                             $request->getMethod()
                 )
             );

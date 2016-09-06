@@ -2,7 +2,7 @@
 
 namespace Prob\Router;
 
-use Prob\Rewrite\Request;
+use Psr\Http\Message\RequestInterface;
 use Prob\Url\Matcher as UrlMatcher;
 
 class Matcher
@@ -22,16 +22,16 @@ class Matcher
     }
 
     /**
-     * @param Request $req
+     * @param RequestInterface $request
      * @return array|bool
      */
-    public function match(Request $req)
+    public function match(RequestInterface $request)
     {
-        $handlers = $this->map->getHandlers($req->getMethod());
+        $handlers = $this->map->getHandlers($request->getMethod());
 
         foreach ($handlers as $row) {
             $matcher = new UrlMatcher($row['urlPattern']);
-            $urlMatching = $matcher->match($req->getPath());
+            $urlMatching = $matcher->match($request->getUri()->getPath());
 
             if ($urlMatching !== false) {
                 $row['urlNameMatching'] = $urlMatching;

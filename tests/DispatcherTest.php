@@ -3,7 +3,8 @@
 namespace Prob\Router;
 
 use PHPUnit\Framework\TestCase;
-use Prob\Rewrite\Request;
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Uri;
 use Prob\Handler\ParameterMap;
 use Prob\Handler\Parameter\Named;
 use Prob\Handler\Parameter\TypedAndNamed;
@@ -36,34 +37,46 @@ class DispatcherTest extends TestCase
 
     public function testDispatchHandler()
     {
-        $_SERVER['PATH_INFO'] = '/some';
-        $this->assertEquals('ok', $this->dispatcher->dispatch(new Request()));
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/some'))
+            ->withMethod('GET')
+            ;
+        $this->assertEquals('ok', $this->dispatcher->dispatch($request));
     }
 
     public function testDispatchHandlerWithName()
     {
-        $_SERVER['PATH_INFO'] = '/other';
-        $this->assertEquals(['board' => 'other'], $this->dispatcher->dispatch(new Request()));
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/boardName'))
+            ->withMethod('GET')
+            ;
+        $this->assertEquals(['board' => 'boardName'], $this->dispatcher->dispatch($request));
     }
 
     public function testDispatchHandlerWithParameterMap()
     {
-        $_SERVER['PATH_INFO'] = '/parameterMap/a/b';
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/parameterMap/a/b'))
+            ->withMethod('GET')
+            ;
 
         $paramMap = new ParameterMap();
         $paramMap->bindBy(new Named('arg1'), 'a');
         $paramMap->bindBy(new Named('arg2'), 'b');
         $paramMap->bindBy(new TypedAndNamed(ParameterMapTest::class, 't'), new ParameterMapTest());
 
-        $this->assertEquals('abok!!!', $this->dispatcher->dispatch(new Request(), $paramMap));
+        $this->assertEquals('abok!!!', $this->dispatcher->dispatch($request, $paramMap));
     }
 
     public function testNoRouteException()
     {
-        $_SERVER['PATH_INFO'] = '';
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/'))
+            ->withMethod('GET')
+            ;
 
         $this->expectException(RoutePathNotFound::class);
-        $this->dispatcher->dispatch(new Request());
+        $this->dispatcher->dispatch($request);
     }
 }
 

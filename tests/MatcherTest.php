@@ -4,7 +4,8 @@ namespace Prob\Router;
 
 use PHPUnit\Framework\TestCase;
 use Prob\Handler\ProcFactory;
-use Prob\Rewrite\Request;
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Uri;
 
 class MatcherTest extends TestCase
 {
@@ -29,40 +30,52 @@ class MatcherTest extends TestCase
 
     public function testMatchRoot()
     {
-        $_SERVER['PATH_INFO'] = '/';
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/'))
+            ->withMethod('GET')
+            ;
 
         $this->assertEquals([
             'urlPattern' => '/',
             'handler' => ProcFactory::getProc('test', 'Prob\Router'),
             'urlNameMatching' => []
-        ], $this->matcher->match(new Request()));
+        ], $this->matcher->match($request));
     }
 
     public function testMatchOneDeep()
     {
-        $_SERVER['PATH_INFO'] = '/some';
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/some'))
+            ->withMethod('GET')
+            ;
 
         $this->assertEquals([
             'urlPattern' => '/some',
             'handler' => ProcFactory::getProc('test', 'Prob\Router'),
             'urlNameMatching' => []
-        ], $this->matcher->match(new Request()));
+        ], $this->matcher->match($request));
     }
 
     public function testMatchTwoDeep()
     {
-        $_SERVER['PATH_INFO'] = '/some/other';
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/some/other'))
+            ->withMethod('GET')
+            ;
 
         $this->assertEquals([
             'urlPattern' => '/some/other',
             'handler' => ProcFactory::getProc('test', 'Prob\Router'),
             'urlNameMatching' => []
-        ], $this->matcher->match(new Request()));
+        ], $this->matcher->match($request));
     }
 
     public function testMatchNameHolderOneDeep()
     {
-        $_SERVER['PATH_INFO'] = '/free';
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/free'))
+            ->withMethod('GET')
+            ;
 
         $this->assertEquals([
             'urlPattern' => '/{board:string}',
@@ -70,12 +83,15 @@ class MatcherTest extends TestCase
             'urlNameMatching' => [
                 'board' => 'free'
             ]
-        ], $this->matcher->match(new Request()));
+        ], $this->matcher->match($request));
     }
 
     public function testMatchNameHolderTwoDeep()
     {
-        $_SERVER['PATH_INFO'] = '/free/5';
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/free/5'))
+            ->withMethod('GET')
+            ;
 
         $this->assertEquals([
             'urlPattern' => '/{board}/{post:int}',
@@ -84,12 +100,15 @@ class MatcherTest extends TestCase
                 'board' => 'free',
                 'post' => '5'
             ]
-        ], $this->matcher->match(new Request()));
+        ], $this->matcher->match($request));
     }
 
     public function testMatchNameHolderTwoDeepOneStatic()
     {
-        $_SERVER['PATH_INFO'] = '/free/5/edit';
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/free/5/edit'))
+            ->withMethod('GET')
+            ;
 
         $this->assertEquals([
             'urlPattern' => '/{board:string}/{post:int}/edit',
@@ -98,14 +117,18 @@ class MatcherTest extends TestCase
                 'board' => 'free',
                 'post' => '5'
             ]
-        ], $this->matcher->match(new Request()));
+        ], $this->matcher->match($request));
     }
 
     public function testNoMatch()
     {
-        $_SERVER['PATH_INFO'] = '/no_match/';
+        $request = (new Request())
+            ->withUri(new Uri('http://test.com/some/no_match/'))
+            ->withMethod('GET')
+            ;
 
-        $this->assertEquals(false, $this->matcher->match(new Request()));
+        print_r($this->matcher->match($request));
+        $this->assertEquals(false, $this->matcher->match($request));
     }
 }
 

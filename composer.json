@@ -10,11 +10,12 @@
     },
     "require": {
         "php": ">=7.0",
-        "prob/rewrite-helper": "dev-master",
         "prob/handler": "dev-master",
-        "prob/url-helper": "dev-master"
+        "prob/url-helper": "dev-master",
+        "psr/http-message": "*"
     },
     "require-dev": {
-      "phpunit/phpunit": "*"
+      "phpunit/phpunit": "*",
+      "zendframework/zend-diactoros": "*"
     }
 }
