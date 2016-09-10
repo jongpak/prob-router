@@ -32,12 +32,14 @@ class Matcher
 
         /** @var $handler MethodHandler */
         foreach ($handlers as $handler) {
-            $matcher = new UrlMatcher($handler->getUrlPattern());
-            $urlMatching = $matcher->match($request->getUri()->getPath());
+            $matcher = new UrlMatcher();
+            $matcher->setUrlFormat($handler->getUrlPattern());
 
-            if ($urlMatching !== false) {
+            $path = $request->getUri()->getPath();
+
+            if ($matcher->isMatch($path)) {
                 return [
-                    'urlNameMatching' => $urlMatching,
+                    'urlNameMatching' => $matcher->getMatchedUrlFormat($path),
                     'handler' => $handler->getHandlerProc(),
                     'urlPattern' => $handler->getUrlPattern()
                 ];
