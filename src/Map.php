@@ -7,18 +7,7 @@ use Prob\Handler\ProcInterface;
 
 class Map
 {
-    /**
-     * array['GET'|'POST']
-     *          [index]
-     *              ['urlPattern']  string          a pattern of url (ex.) /{board}/{post}
-     *              ['handler']     ProcInterface   a handler of urlPattern
-     * @var array
-     */
-    private $handlers = [
-        'GET' => [],
-        'POST' => [],
-    ];
-
+    private $handlers = [];
     private $namespace = '';
 
     public function setNamespace($namespace = '\\')
@@ -28,34 +17,35 @@ class Map
 
     public function get($path, $handler)
     {
-        $this->addHandler('GET', $path, $handler);
+        $this->handlers[] = $this->buildMethodHandler('GET', $path, $handler);
     }
 
     public function post($path, $handler)
     {
-        $this->addHandler('POST', $path, $handler);
+        $this->handlers[] = $this->buildMethodHandler('POST', $path, $handler);
     }
 
-    private function addHandler($method, $path, $handler)
+    private function buildMethodHandler($method, $path, $handler)
     {
-        $this->handlers[$method][] = [
-            'urlPattern' => $path,
-            'handler' => ProcFactory::getProc($handler, $this->namespace)
-        ];
+        $methodHandler = new MethodHandler();
+        $methodHandler->setMethod($method);
+        $methodHandler->setUrlPattern($path);
+        $methodHandler->setHandlerProc(ProcFactory::getProc($handler, $this->namespace));
+
+        return $methodHandler;
     }
 
-    /**
-     * Return array of handlers
-     *
-     * return value:
-     * array[index]
-     *          ['urlPattern']  string          a pattern of url (ex.) /{board}/{post}
-     *          ['handler']     ProcInterface   a handler of urlPattern
-     *
-     * @return array
-     */
-    public function getHandlers($handler)
+    public function getHandlerByMethod($method)
     {
-        return $this->handlers[$handler];
+        $handlers = [];
+
+        /** @var $handler MethodHandler */
+        foreach ($this->handlers as $handler) {
+            if ($handler->getMethod() === $method) {
+                $handlers[] = $handler;
+            }
+        }
+
+        return $handlers;
     }
 }

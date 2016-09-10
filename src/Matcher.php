@@ -4,6 +4,7 @@ namespace Prob\Router;
 
 use Psr\Http\Message\RequestInterface;
 use Prob\Url\Matcher as UrlMatcher;
+use Prob\Router\MethodHandler;
 
 class Matcher
 {
@@ -27,15 +28,19 @@ class Matcher
      */
     public function match(RequestInterface $request)
     {
-        $handlers = $this->map->getHandlers($request->getMethod());
+        $handlers = $this->map->getHandlerByMethod($request->getMethod());
 
-        foreach ($handlers as $row) {
-            $matcher = new UrlMatcher($row['urlPattern']);
+        /** @var $handler MethodHandler */
+        foreach ($handlers as $handler) {
+            $matcher = new UrlMatcher($handler->getUrlPattern());
             $urlMatching = $matcher->match($request->getUri()->getPath());
 
             if ($urlMatching !== false) {
-                $row['urlNameMatching'] = $urlMatching;
-                return $row;
+                return [
+                    'urlNameMatching' => $urlMatching,
+                    'handler' => $handler->getHandlerProc(),
+                    'urlPattern' => $handler->getUrlPattern()
+                ];
             }
         }
 

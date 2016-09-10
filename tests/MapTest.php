@@ -35,37 +35,21 @@ class MapTest extends TestCase
 
     public function testGetMethod()
     {
-        $this->assertEquals([
-            [
-                'urlPattern' => '/',
-                'handler' => ProcFactory::getProc(function () {
-                    echo 'getOk';
-                })
-            ],
-            [
-                'urlPattern' => '/some',
-                'handler' => ProcFactory::getProc(function () {
-                    echo 'getOkSome';
-                })
-            ]
-        ], $this->map->getHandlers('GET'));
+        $this->assertEquals('/', $this->map->getHandlerByMethod('GET')[0]->getUrlPattern());
+        $this->assertEquals('/some', $this->map->getHandlerByMethod('GET')[1]->getUrlPattern());
+
+        $this->expectOutputString('getOkgetOkSome');
+        $this->map->getHandlerByMethod('GET')[0]->getHandlerProc()->exec();
+        $this->map->getHandlerByMethod('GET')[1]->getHandlerProc()->exec();
     }
 
     public function testPostMethod()
     {
-        $this->assertEquals([
-            [
-                'urlPattern' => '/',
-                'handler' => ProcFactory::getProc(function () {
-                    echo 'postOk';
-                })
-            ],
-            [
-                'urlPattern' => '/some',
-                'handler' => ProcFactory::getProc(function () {
-                    echo 'postOkSome';
-                })
-            ]
-        ], $this->map->getHandlers('POST'));
+        $this->assertEquals('/', $this->map->getHandlerByMethod('POST')[0]->getUrlPattern());
+        $this->assertEquals('/some', $this->map->getHandlerByMethod('POST')[1]->getUrlPattern());
+
+        $this->expectOutputString('postOkpostOkSome');
+        $this->map->getHandlerByMethod('POST')[0]->getHandlerProc()->exec();
+        $this->map->getHandlerByMethod('POST')[1]->getHandlerProc()->exec();
     }
 }
