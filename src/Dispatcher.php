@@ -4,6 +4,8 @@ namespace Prob\Router;
 
 use Psr\Http\Message\RequestInterface;
 use Prob\Handler\ParameterMap;
+use Prob\Handler\ProcInterface;
+use Prob\Handler\Proc\MethodProc;
 use Prob\Router\Exception\RoutePathNotFound;
 
 class Dispatcher
@@ -51,9 +53,15 @@ class Dispatcher
         }
 
         if ($map === null) {
+            if ($requestMatching['handler'] instanceof MethodProc) {
+                $requestMatching['handler']->execConstructor();
+            }
             return $requestMatching['handler']->exec($requestMatching['urlNameMatching']);
         }
 
+        if ($requestMatching['handler'] instanceof MethodProc) {
+            $requestMatching['handler']->execConstructorWithParameterMap($map);
+        }
         return $requestMatching['handler']->execWithParameterMap($map);
     }
 }
