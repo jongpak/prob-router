@@ -37,20 +37,13 @@ class Dispatcher
      */
     public function dispatch(RequestInterface $request, ParameterMap $map = null)
     {
+        $this->validateRoutePath($request);
+
         /**
          * Maching result of reqeust handler
          * @var array|bool
          */
         $requestMatching = $this->matcher->match($request);
-
-        if ($requestMatching === false) {
-            throw new RoutePathNotFound(
-                sprintf('Route path not found: %s (%s)',
-                            $request->getUri()->getPath(),
-                            $request->getMethod()
-                )
-            );
-        }
 
         if ($map === null) {
             if ($requestMatching['handler'] instanceof MethodProc) {
@@ -63,5 +56,17 @@ class Dispatcher
             $requestMatching['handler']->execConstructorWithParameterMap($map);
         }
         return $requestMatching['handler']->execWithParameterMap($map);
+    }
+
+    private function validateRoutePath(RequestInterface $request)
+    {
+        if ($this->matcher->match($request) === false) {
+            throw new RoutePathNotFound(
+                sprintf('Route path not found: %s (%s)',
+                            $request->getUri()->getPath(),
+                            $request->getMethod()
+                )
+            );
+        }
     }
 }
